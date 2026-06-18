@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: service
+  datasource:
+    url: ${DB_URL}
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
