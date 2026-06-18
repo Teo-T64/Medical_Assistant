@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: symptom
+  data:
+    mongodb:
+      uri: ${URI}
+
+server:
+    port: 8082
