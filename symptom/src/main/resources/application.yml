@@ -4,6 +4,7 @@ spring:
   data:
     mongodb:
       uri: ${URI}
+      database: symptoms_db
 
 server:
     port: 8082
