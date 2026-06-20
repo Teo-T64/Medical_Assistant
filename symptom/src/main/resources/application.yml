@@ -1,10 +1,8 @@
 spring:
   application:
     name: symptom
-  data:
-    mongodb:
+  mongodb:
       uri: ${URI}
-      database: symptoms_db
 
 server:
     port: 8082
