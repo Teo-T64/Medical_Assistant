@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class SymptomService {
@@ -33,5 +36,19 @@ public class SymptomService {
         symptomResponse.setCreatedAt(symptom.getCreatedAt());
         symptomResponse.setUpdatedAt(symptom.getUpdatedAt());
         return symptomResponse;
+    }
+
+    public List<SymptomResponse> getUserSymptoms(Long userId) {
+        List<Symptom> symptoms = symptomRepository.findAllByUserId(userId);
+        return symptoms.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public SymptomResponse getSymptomById(String symptomId) {
+        return symptomRepository.findById(symptomId)
+                .map(this::mapToResponse)
+                .orElseThrow(()-> new RuntimeException("Symptom with" + symptomId + "does not exist"));
+
     }
 }
