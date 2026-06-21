@@ -2,7 +2,6 @@ package com.med.symptom.controller;
 
 import com.med.symptom.dto.SymptomRequest;
 import com.med.symptom.dto.SymptomResponse;
-import com.med.symptom.model.Symptom;
 
 import com.med.symptom.service.SymptomService;
 import lombok.AllArgsConstructor;
