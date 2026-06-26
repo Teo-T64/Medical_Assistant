@@ -10,3 +10,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL}
+
+rabbitmq:
+  exchange:
+    name: ${RABBIT_NAME}
+  queue:
+    name: ${RABBIT_QUEUE}
+  routing:
+    key: ${RABBIT_ROUTING}
