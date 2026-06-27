@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class SymptomMsgListener {
-    
+    private final SymptomAIService symptomAIService;
+
     @RabbitListener(queues = "${rabbitmq.queue.name}")
     public void processSymptom(Symptom symptom) {
         log.info("Received Symptom for processing: {}", symptom.getId());
+        log.info("Generated Suggestion: {}", symptomAIService.generateSuggestion(symptom));
+
     }
 }

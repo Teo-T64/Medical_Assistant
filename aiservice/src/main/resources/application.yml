@@ -18,3 +18,8 @@ rabbitmq:
     name: ${RABBIT_QUEUE}
   routing:
     key: ${RABBIT_ROUTING}
+
+gemini:
+  api:
+    url: ${GEMINI_URL}
+    key: ${GEMINI_KEY}
