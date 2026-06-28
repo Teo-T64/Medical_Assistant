@@ -21,7 +21,7 @@ public class Suggestion {
     @Id
     private String id;
     private String symptomId;
-    private String userId;
+    private Long userId;
 
     private String conditionName;
     private Double confidenceScore;
