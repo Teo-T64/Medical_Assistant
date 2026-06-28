@@ -22,11 +22,19 @@ public class Suggestion {
     private String id;
     private String symptomId;
     private String userId;
-    private String symptomType;
-    private String suggestion;
-    private List<String> improvements;
-    private List<String> safety;
+
+    private String conditionName;
+    private Double confidenceScore;
+    private String conditionDescription;
+
+    private List<String> lifestyleRecommendations;
+
+    private List<Medicine> suggestedMedicines;
+
+    private List<String> urgentCareWarnings;
+
+    private String triageLevel;
+
     @CreatedDate
     private LocalDateTime createdAt;
-
 }

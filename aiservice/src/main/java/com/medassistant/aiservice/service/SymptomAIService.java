@@ -1,5 +1,7 @@
 package com.medassistant.aiservice.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medassistant.aiservice.model.Suggestion;
 import com.medassistant.aiservice.model.Symptom;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,26 @@ public class SymptomAIService {
         String prompt = createPromptForSymptom(symptom);
         String aiResponse = geminiService.getAnswer(prompt);
         log.info("AI Response is {}", aiResponse);
+        processAiResponse(symptom, aiResponse);
         return aiResponse;
+    }
+
+    private void processAiResponse(Symptom symptom, String aiResponse) {
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(aiResponse);
+
+            JsonNode textNode = rootNode.path("candidates")
+                    .get(0)
+                    .path("content")
+                    .path("parts")
+                    .get(0)
+                    .path("text");
+            String jsonContent = textNode.asText().replace("```json\\n","").replace("\\n```","").trim();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private String createPromptForSymptom(Symptom symptom) {
