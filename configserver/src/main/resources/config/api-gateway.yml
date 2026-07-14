@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/users/**
+            - id: symptom
+              uri: lb://SYMPTOM
+              predicates:
+                - Path=/api/symptoms/**
+            - id: ai-service
+              uri: lb://AI-SERVICE
+              predicates:
+                - Path=/api/suggestion/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
