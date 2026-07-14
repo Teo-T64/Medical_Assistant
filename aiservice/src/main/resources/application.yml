@@ -1,25 +1,6 @@
-server:
-  port: 8083
+
 spring:
   application:
     name: ai-service
-  mongodb:
-    uri: ${URI}
-    
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL}
-
-rabbitmq:
-  exchange:
-    name: ${RABBIT_NAME}
-  queue:
-    name: ${RABBIT_QUEUE}
-  routing:
-    key: ${RABBIT_ROUTING}
-
-gemini:
-  api:
-    url: ${GEMINI_URL}
-    key: ${GEMINI_KEY}
+  config:
+    import: "optional:configserver:http://localhost:8888"

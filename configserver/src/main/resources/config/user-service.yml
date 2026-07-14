@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
