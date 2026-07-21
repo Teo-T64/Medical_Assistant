@@ -36,22 +36,22 @@ public class KeyCloakUserSyncFilter implements WebFilter {
 
         String keycloakId = registerRequest.getKeycloakId();
 
-        return userValidationService.validateUser(String.valueOf(keycloakId))
+        ServerHttpRequest mutatedRequest = serverWebExchange.getRequest().mutate()
+                .header("X-User-ID", keycloakId)
+                .build();
+        ServerWebExchange mutatedExchange = serverWebExchange.mutate().request(mutatedRequest).build();
+
+        return userValidationService.validateUser(keycloakId)
                 .flatMap(exists -> {
                     if (!exists) {
-                        log.info("New Keycloak user detected. Registering user with ID: {}", keycloakId);
-                        return userValidationService.registerUser(registerRequest);
+                        log.info("New Keycloak user detected. Syncing user with ID: {}", keycloakId);
+                        return userValidationService.registerUser(registerRequest)
+                                .then(webFilterChain.filter(mutatedExchange));
                     } else {
                         log.info("User already exists with Keycloak ID: {}", keycloakId);
-                        return Mono.empty();
+                        return webFilterChain.filter(mutatedExchange);
                     }
-                })
-                .then(Mono.defer(() -> {
-                    ServerHttpRequest request = serverWebExchange.getRequest().mutate()
-                            .header("X-User-ID", keycloakId)
-                            .build();
-                    return webFilterChain.filter(serverWebExchange.mutate().request(request).build());
-                }));
+                });
     }
 
     private RegisterRequest getUserDetails(String token) {
